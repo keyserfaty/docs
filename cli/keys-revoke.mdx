@@ -1,0 +1,22 @@
+---
+title: 'keys revoke'
+description: 'Revoke an API key'
+---
+
+Revokes an API key. You are prompted to select an organization and then an active key to revoke. Revoked keys immediately stop working. This cannot be undone.
+
+```bash
+agent-cards-admin keys revoke
+```
+
+## Example
+
+```
+$ agent-cards-admin keys revoke
+? Select organization: Acme Inc (billing@acme.com)
+? Select key to revoke: sk_test_a1b2 — dev-key
+? Revoke key sk_test_a1b2 (dev-key)? This cannot be undone. Yes
+✓ Key sk_test_a1b2 revoked
+```
+
+The revoked key is automatically removed from local storage. If it was the active key, you will be prompted to select a key on the next command that requires one.

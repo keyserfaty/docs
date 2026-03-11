@@ -1,0 +1,52 @@
+---
+title: Cardholders
+description: 'Manage end-users who hold cards in your organization'
+---
+
+Cardholders represent the people who use cards issued through your organization. Each cardholder has their own wallet and can have multiple cards.
+
+## Types
+
+There are two types of cardholders:
+
+| Type | Description |
+|------|-------------|
+| **Personal** | Linked 1:1 to a User account. Created automatically when an individual signs up for AgentCard. |
+| **Org-managed** | Created by companies via the API. No User account needed — the organization manages the cardholder entirely. |
+
+Personal cardholders are for individual AgentCard users. Org-managed cardholders are for B2B use cases where your company issues cards on behalf of end-users.
+
+## Relationship to wallets and cards
+
+<Frame>
+  <img src="/images/cardholder-card-relationship.png" alt="Cardholder to wallet and card relationship" />
+</Frame>
+
+Each cardholder has their own wallet. The funding flow works like this:
+
+1. **Fund the cardholder wallet** — Use the [Fund Cardholder Wallet](/api-reference/cardholders/fund-wallet) endpoint to create a Stripe Checkout session. Once payment completes, the funds are credited to the cardholder's wallet.
+2. **Create cards** — Cards for a cardholder are funded from the cardholder's wallet.
+
+When you create a card with a `cardholderId`, the spend limit is debited from the cardholder's wallet.
+
+## Properties
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `id` | `string` | Unique cardholder identifier |
+| `firstName` | `string` | Cardholder's first name |
+| `lastName` | `string` | Cardholder's last name |
+| `email` | `string` | Cardholder's email address (optional) |
+| `dateOfBirth` | `string` | Date of birth in `YYYY-MM-DD` format |
+| `phoneNumber` | `string` | Phone number (optional) |
+| `stripeCardholderId` | `string` | Stripe Issuing cardholder ID |
+| `createdAt` | `string` | ISO 8601 timestamp |
+| `updatedAt` | `string` | ISO 8601 timestamp |
+
+## Creating a cardholder
+
+Create org-managed cardholders with the [Create Cardholder](/api-reference/cardholders/create) endpoint. `firstName`, `lastName`, and `dateOfBirth` are required.
+
+## Funding a cardholder
+
+Before a cardholder can have cards created for them, you need to fund their wallet using the [Fund Cardholder Wallet](/api-reference/cardholders/fund-wallet) endpoint. This creates a Stripe Checkout session — once payment completes, the funds are credited to the cardholder's wallet. You can poll the [Get Funding Status](/api-reference/cardholders/get-funding-status) endpoint to check when the funding is complete.

@@ -1,0 +1,43 @@
+---
+title: CLI Overview
+description: 'Manage organizations, API keys, cards, and wallets from your terminal'
+---
+
+The `agent-cards-admin` CLI is the primary tool for managing your AgentCard account. It handles organization setup, API key management, and card operations.
+
+## Installation
+
+```bash
+npm install -g agent-cards-admin
+```
+
+## Authentication
+
+Most commands require you to be logged in. Run `agent-cards-admin login` to authenticate with a magic link sent to your email.
+
+Commands that operate on cards, wallets, and cardholders require an API key. The CLI stores your keys locally and remembers which one is active. You can set the active key with `keys set`, or it is automatically set when you create or rotate a key. You can also pass `--key` on any command to override.
+
+## Command groups
+
+| Group | Description | Auth |
+|-------|-------------|------|
+| `login` / `logout` | Authenticate with AgentCard | — |
+| `orgs` | Create and manage organizations | Login |
+| `keys` | Create, list, set, revoke, and rotate API keys | Login |
+| `members` | Add, list, and remove org members | Login |
+| `cards` | Create, list, inspect, and close virtual cards | API key |
+| `wallet` | Fund wallets and check balances | API key |
+| `cardholders` | Create, list, and inspect cardholders | API key |
+
+## Global options
+
+```
+-V, --version   Show version number
+-h, --help      Show help for any command
+```
+
+Use `--help` on any subcommand for details:
+
+```bash
+agent-cards-admin cards create --help
+```

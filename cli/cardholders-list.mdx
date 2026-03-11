@@ -1,0 +1,23 @@
+---
+title: 'cardholders list'
+description: 'List all cardholders'
+---
+
+Lists all cardholders in the organization in a table.
+
+```bash
+agent-cards-admin cardholders list
+```
+
+## Example
+
+```
+$ agent-cards-admin cardholders list
+? API key: sk_test_a1b2c3d4e5f6...
+┌─────────────┬─────────────┬───────────────────┬────────────┐
+│ ID          │ Name        │ Email             │ Created    │
+├─────────────┼─────────────┼───────────────────┼────────────┤
+│ ch_abc123   │ Alice Smith │ alice@example.com │ 3/10/2026  │
+│ ch_def456   │ Bob Jones   │ bob@example.com   │ 3/8/2026   │
+└─────────────┴─────────────┴───────────────────┴────────────┘
+```

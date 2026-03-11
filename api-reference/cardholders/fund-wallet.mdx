@@ -1,0 +1,86 @@
+---
+title: 'Fund Cardholder Wallet'
+api: 'POST https://api.agentcard.sh/api/v1/cardholders/{id}/wallet/fund'
+description: "Create a Stripe Checkout session to fund a cardholder's wallet"
+---
+
+Creates a Stripe Checkout session to fund a cardholder's wallet. After the checkout is completed, the funds are credited to the cardholder's wallet automatically.
+
+## Path parameters
+
+<ParamField path="id" type="string" required>
+  The cardholder's unique identifier.
+</ParamField>
+
+## Request body
+
+<ParamField body="amountCents" type="integer" required>
+  Amount to fund in cents. Must be a positive integer.
+</ParamField>
+
+## Response
+
+<ResponseField name="checkoutUrl" type="string">
+  Stripe Checkout URL. Redirect the payer to this URL to complete the payment.
+</ResponseField>
+
+<ResponseField name="fundingSessionId" type="string">
+  Funding session identifier. Use this to poll the funding status with [Get Funding Status](/api-reference/cardholders/get-funding-status).
+</ResponseField>
+
+<RequestExample>
+```bash cURL
+curl -X POST https://api.agentcard.sh/api/v1/cardholders/ch_abc123/wallet/fund \
+  -H "Authorization: Bearer sk_test_..." \
+  -H "Content-Type: application/json" \
+  -d '{"amountCents": 5000}'
+```
+
+```python Python
+import requests
+
+resp = requests.post(
+    "https://api.agentcard.sh/api/v1/cardholders/ch_abc123/wallet/fund",
+    headers={"Authorization": "Bearer sk_test_..."},
+    json={"amountCents": 5000},
+)
+result = resp.json()
+# result["checkoutUrl"] -> redirect payer here
+# result["fundingSessionId"] -> poll for status
+```
+
+```javascript Node.js
+const resp = await fetch("https://api.agentcard.sh/api/v1/cardholders/ch_abc123/wallet/fund", {
+  method: "POST",
+  headers: {
+    Authorization: "Bearer sk_test_...",
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({ amountCents: 5000 }),
+});
+const result = await resp.json();
+// result.checkoutUrl -> redirect payer here
+// result.fundingSessionId -> poll for status
+```
+</RequestExample>
+
+<ResponseExample>
+```json 200
+{
+  "checkoutUrl": "https://checkout.stripe.com/c/pay/cs_test_...",
+  "fundingSessionId": "fs_abc123"
+}
+```
+
+```json 400
+{
+  "error": "amountCents must be a positive integer"
+}
+```
+
+```json 404
+{
+  "error": "Cardholder not found"
+}
+```
+</ResponseExample>

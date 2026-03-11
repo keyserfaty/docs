@@ -1,0 +1,45 @@
+---
+title: 'orgs create'
+description: 'Create a new organization'
+---
+
+Creates a new organization. Prompts for the organization name and billing email, then offers to create an API key.
+
+```bash
+agent-cards-admin orgs create
+```
+
+## Example
+
+```
+$ agent-cards-admin orgs create
+? Organization name: Acme Inc
+? Billing email: billing@acme.com
+? Create organization "Acme Inc" (billing@acme.com)? Yes
+✓ Organization created
+
+  ID    org_abc123
+  Name  Acme Inc
+  Email billing@acme.com
+
+? Create an API key for this organization? Yes
+
+  SANDBOX MODE — All API keys are sandbox-only (sk_test_*)
+
+? Key name (e.g. "production", "ci-pipeline"): dev-key
+? Create sandbox API key "dev-key" for this org? Yes
+✓ API key created
+
+  WARNING: Save this key now. You will not see it again.
+
+  Key    sk_test_a1b2c3d4e5f6...
+  ID     key_abc123
+  Prefix sk_test_a1b2
+  Name   dev-key
+```
+
+You can also pass options to skip the prompts:
+
+```bash
+agent-cards-admin orgs create --name "Acme Inc" --email billing@acme.com
+```

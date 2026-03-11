@@ -1,0 +1,40 @@
+---
+title: 'Get Cardholder Balance'
+api: 'GET https://api.agentcard.sh/api/v1/cardholders/{id}/wallet/balance'
+description: "Get a cardholder's wallet balance"
+---
+
+Returns the current balance of a cardholder's wallet in cents.
+
+## Path parameters
+
+<ParamField path="id" type="string" required>
+  The cardholder's unique identifier.
+</ParamField>
+
+## Response
+
+<ResponseField name="balanceCents" type="integer">
+  Current cardholder wallet balance in cents.
+</ResponseField>
+
+<RequestExample>
+```bash cURL
+curl https://api.agentcard.sh/api/v1/cardholders/ch_abc123/wallet/balance \
+  -H "Authorization: Bearer sk_test_..."
+```
+</RequestExample>
+
+<ResponseExample>
+```json 200
+{
+  "balanceCents": 5000
+}
+```
+
+```json 404
+{
+  "error": "Cardholder not found"
+}
+```
+</ResponseExample>

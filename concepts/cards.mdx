@@ -1,0 +1,53 @@
+---
+title: Cards
+description: 'Prepaid virtual Visa cards for AI agents'
+---
+
+Cards are prepaid virtual Visa cards issued through Stripe Issuing. Each card has a fixed spend limit set at creation time.
+
+## Lifecycle
+
+```
+OPEN → CLOSED
+```
+
+- **OPEN** — Card is active and can be used for purchases
+- **CLOSED** — Card is revoked and cannot be used. Any remaining balance is returned to the cardholder's wallet.
+
+## Properties
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `id` | `string` | Unique card identifier |
+| `cardholderId` | `string` | Cardholder the card belongs to (if any) |
+| `last4` | `string` | Last 4 digits of the card number |
+| `expiry` | `string` | Expiration date (`MM/YY`) |
+| `spendLimitCents` | `integer` | Original spend limit in cents |
+| `balanceCents` | `integer` | Remaining balance in cents |
+| `status` | `string` | `OPEN` or `CLOSED` |
+| `createdAt` | `string` | ISO 8601 timestamp |
+
+## Sensitive fields
+
+The full card number (`pan`) and security code (`cvv`) are only returned by the [Get Card Details](/api-reference/cards/get-details) endpoint. All other endpoints return only the `last4`.
+
+## Limits
+
+- **Maximum card amount**: $500.00 (50,000 cents)
+- **Maximum active cards per user**: 5
+
+## Cardholders
+
+Every card belongs to a [cardholder](/concepts/cardholders). When you create a card, you pass a `cardholderId` and the spend limit is debited from that cardholder's wallet.
+
+See [Cardholders](/concepts/cardholders) for details on creating cardholders and funding their wallets.
+
+## Billing address
+
+API-created cards use a default billing address:
+
+```
+2261 Market Street #4242
+San Francisco, CA 94114
+US
+```

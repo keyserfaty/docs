@@ -1,0 +1,75 @@
+---
+title: 'Get Card'
+api: 'GET https://api.agentcard.sh/api/v1/cards/{id}'
+description: 'Get a card summary (no sensitive details)'
+---
+
+Returns a card's summary information. Does **not** include the full card number or CVV. Use [Get Card Details](/api-reference/cards/get-details) for sensitive fields.
+
+## Path parameters
+
+<ParamField path="id" type="string" required>
+  The card ID.
+</ParamField>
+
+## Response
+
+<ResponseField name="id" type="string">
+  Unique card identifier.
+</ResponseField>
+
+<ResponseField name="cardholderId" type="string">
+  The cardholder this card belongs to, if any.
+</ResponseField>
+
+<ResponseField name="last4" type="string">
+  Last 4 digits of the card number.
+</ResponseField>
+
+<ResponseField name="expiry" type="string">
+  Expiration date in `MM/YY` format.
+</ResponseField>
+
+<ResponseField name="spendLimitCents" type="integer">
+  The card's total spend limit in cents.
+</ResponseField>
+
+<ResponseField name="balanceCents" type="integer">
+  Remaining balance in cents.
+</ResponseField>
+
+<ResponseField name="status" type="string">
+  `OPEN` or `CLOSED`.
+</ResponseField>
+
+<ResponseField name="createdAt" type="string">
+  ISO 8601 creation timestamp.
+</ResponseField>
+
+<RequestExample>
+```bash cURL
+curl https://api.agentcard.sh/api/v1/cards/cm3abc123 \
+  -H "Authorization: Bearer sk_test_..."
+```
+</RequestExample>
+
+<ResponseExample>
+```json 200
+{
+  "id": "cm3abc123",
+  "cardholderId": "ch_abc123",
+  "last4": "4242",
+  "expiry": "03/28",
+  "spendLimitCents": 1000,
+  "balanceCents": 750,
+  "status": "OPEN",
+  "createdAt": "2026-03-10T12:00:00.000Z"
+}
+```
+
+```json 404
+{
+  "error": "Card not found"
+}
+```
+</ResponseExample>

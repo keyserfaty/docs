@@ -1,0 +1,64 @@
+---
+title: 'List Cardholders'
+api: 'GET https://api.agentcard.sh/api/v1/cardholders'
+description: 'List all cardholders in your organization'
+---
+
+Returns a paginated list of cardholders belonging to your organization.
+
+## Query parameters
+
+<ParamField query="limit" type="integer" default="50">
+  Number of cardholders to return. Min 1, max 100.
+</ParamField>
+
+<ParamField query="offset" type="integer" default="0">
+  Number of cardholders to skip for pagination.
+</ParamField>
+
+## Response
+
+<ResponseField name="cardholders" type="array">
+  Array of cardholder objects.
+</ResponseField>
+
+<ResponseField name="total" type="integer">
+  Total number of cardholders.
+</ResponseField>
+
+<ResponseField name="limit" type="integer">
+  The limit used for this request.
+</ResponseField>
+
+<ResponseField name="offset" type="integer">
+  The offset used for this request.
+</ResponseField>
+
+<RequestExample>
+```bash cURL
+curl "https://api.agentcard.sh/api/v1/cardholders?limit=10" \
+  -H "Authorization: Bearer sk_test_..."
+```
+</RequestExample>
+
+<ResponseExample>
+```json 200
+{
+  "cardholders": [
+    {
+      "id": "ch_abc123",
+      "firstName": "Alice",
+      "lastName": "Smith",
+      "email": "alice@example.com",
+      "dateOfBirth": "1990-01-15T00:00:00.000Z",
+      "phoneNumber": null,
+      "createdAt": "2026-03-10T12:00:00.000Z",
+      "updatedAt": "2026-03-10T12:00:00.000Z"
+    }
+  ],
+  "total": 1,
+  "limit": 10,
+  "offset": 0
+}
+```
+</ResponseExample>

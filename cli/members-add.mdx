@@ -1,0 +1,48 @@
+---
+title: 'members add'
+description: 'Add a member to an organization'
+---
+
+Adds a member to an organization by email. If the email doesn't have an AgentCard account, the CLI offers to send an invite.
+
+```bash
+agent-cards-admin members add
+```
+
+## Example
+
+```
+$ agent-cards-admin members add
+? Select organization: Acme Inc (billing@acme.com)
+? Member email: bob@acme.com
+? Add bob@acme.com as admin to this organization? Yes
+✓ Member added
+
+  Member ID mem_abc123
+  Email     bob@acme.com
+  Role      admin
+```
+
+If the user doesn't have an account yet:
+
+```
+$ agent-cards-admin members add
+? Select organization: Acme Inc (billing@acme.com)
+? Member email: new@acme.com
+? Add new@acme.com as admin to this organization? Yes
+  No account found for new@acme.com
+? Send them an invite to sign up? Yes
+✓ Invite sent and member added
+
+  Member ID mem_def456
+  Email     new@acme.com
+  Role      admin
+
+  new@acme.com will receive a magic link to complete setup.
+```
+
+You can also pass options to skip the prompts:
+
+```bash
+agent-cards-admin members add --org org_abc123 --email bob@acme.com
+```

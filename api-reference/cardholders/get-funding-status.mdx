@@ -1,0 +1,51 @@
+---
+title: 'Get Funding Status'
+api: 'GET https://api.agentcard.sh/api/v1/cardholders/funding/status/{sessionId}'
+description: 'Poll a funding session for completion'
+---
+
+Returns the current status of a funding session. Use this to poll after redirecting a user to the Stripe Checkout URL returned by [Fund Cardholder Wallet](/api-reference/cardholders/fund-wallet).
+
+## Path parameters
+
+<ParamField path="sessionId" type="string" required>
+  The funding session ID returned by the fund endpoint.
+</ParamField>
+
+## Response
+
+<ResponseField name="status" type="string">
+  Funding session status: `pending`, `succeeded`, or `failed`.
+</ResponseField>
+
+<ResponseField name="walletBalanceCents" type="integer">
+  The cardholder's wallet balance in cents. Only present when status is `succeeded`.
+</ResponseField>
+
+<RequestExample>
+```bash cURL
+curl https://api.agentcard.sh/api/v1/cardholders/funding/status/fs_abc123 \
+  -H "Authorization: Bearer sk_test_..."
+```
+</RequestExample>
+
+<ResponseExample>
+```json 200 (pending)
+{
+  "status": "pending"
+}
+```
+
+```json 200 (succeeded)
+{
+  "status": "succeeded",
+  "walletBalanceCents": 5000
+}
+```
+
+```json 404
+{
+  "error": "Funding session not found"
+}
+```
+</ResponseExample>

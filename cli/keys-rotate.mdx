@@ -1,0 +1,31 @@
+---
+title: 'keys rotate'
+description: 'Rotate an API key'
+---
+
+Rotates an API key. The old key is revoked and a new one is generated. You are prompted to select an organization and key. The old key stops working immediately.
+
+```bash
+agent-cards-admin keys rotate
+```
+
+## Example
+
+```
+$ agent-cards-admin keys rotate
+? Select organization: Acme Inc (billing@acme.com)
+? Select key to rotate: sk_test_a1b2 — dev-key
+? Rotate key sk_test_a1b2 (dev-key)? The old key will stop working immediately. Yes
+✓ Key rotated
+
+  WARNING: Save this key now. You will not see it again.
+
+  Key    sk_test_n3w4k3y5...
+  ID     key_ghi789
+  Prefix sk_test_n3w4
+  Name   dev-key
+
+  New key has been set as your active API key.
+```
+
+The old key is removed from local storage and the new key is automatically stored and set as your active API key.

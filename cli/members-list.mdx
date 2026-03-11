@@ -1,0 +1,29 @@
+---
+title: 'members list'
+description: 'List members of an organization'
+---
+
+Lists all members of an organization and their roles in a table. If no org ID is provided, you are prompted to select one.
+
+```bash
+agent-cards-admin members list
+```
+
+## Example
+
+```
+$ agent-cards-admin members list
+? Select organization: Acme Inc (billing@acme.com)
+┌─────────────┬──────────────────┬────────┬────────────┐
+│ ID          │ Email            │ Role   │ Added      │
+├─────────────┼──────────────────┼────────┼────────────┤
+│ mem_abc123  │ alice@acme.com   │ owner  │ 3/1/2026   │
+│ mem_def456  │ bob@acme.com     │ admin  │ 3/5/2026   │
+└─────────────┴──────────────────┴────────┴────────────┘
+```
+
+You can also pass the org ID directly:
+
+```bash
+agent-cards-admin members list --org org_abc123
+```

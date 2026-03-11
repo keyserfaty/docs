@@ -1,0 +1,40 @@
+---
+title: 'keys create'
+description: 'Create a new API key'
+---
+
+Creates a new sandbox API key for an organization. You are prompted to select the organization and name the key. The key is displayed once — save it immediately.
+
+```bash
+agent-cards-admin keys create
+```
+
+## Example
+
+```
+$ agent-cards-admin keys create
+
+  SANDBOX MODE — All API keys are sandbox-only (sk_test_*)
+
+? Select organization: Acme Inc (billing@acme.com)
+? Key name (e.g. "production", "ci-pipeline"): dev-key
+? Create sandbox API key "dev-key" for this org? Yes
+✓ API key created
+
+  WARNING: Save this key now. You will not see it again.
+
+  Key    sk_test_a1b2c3d4e5f6...
+  ID     key_abc123
+  Prefix sk_test_a1b2
+  Name   dev-key
+
+  This key has been set as your active API key.
+```
+
+The created key is automatically stored locally and set as your active API key. You can switch keys later with [`keys set`](/cli/keys-set).
+
+You can also pass options to skip the prompts:
+
+```bash
+agent-cards-admin keys create --org org_abc123 --name "dev-key"
+```

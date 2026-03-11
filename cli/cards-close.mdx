@@ -1,0 +1,29 @@
+---
+title: 'cards close'
+description: 'Close a card permanently'
+---
+
+Closes a card and revokes it at the provider. Any remaining balance is returned to the appropriate wallet. This cannot be undone. If no card ID is provided, you are prompted to select from open cards.
+
+```bash
+agent-cards-admin cards close
+```
+
+## Example
+
+```
+$ agent-cards-admin cards close
+? API key: sk_test_a1b2c3d4e5f6...
+? Select card to close: **** 4242 | $7.50
+? Are you sure you want to close card cm3abc123? This cannot be undone. Yes
+✓ Card closed
+
+  ID     cm3abc123
+  Status CLOSED
+```
+
+You can also pass the card ID directly:
+
+```bash
+agent-cards-admin cards close cm3abc123
+```

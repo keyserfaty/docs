@@ -1,0 +1,31 @@
+---
+title: 'login'
+description: 'Log in with a magic link'
+---
+
+Authenticates you with AgentCard by sending a magic link to your email. Credentials are stored locally and used for organization, API key, and member management commands.
+
+```bash
+agent-cards-admin login
+```
+
+## Example
+
+```
+$ agent-cards-admin login
+? Enter your email address: alice@example.com
+✓ Magic link sent to alice@example.com
+  Check your inbox and click the link to continue...
+⠋ Waiting for verification...
+✓ Signed in as alice@example.com
+  Credentials saved to ~/.agent-cards-admin.json
+```
+
+If you are already logged in, the CLI will ask if you want to log out first:
+
+```
+$ agent-cards-admin login
+? You are already logged in as alice@example.com. Log out first? Yes
+? Enter your email address: bob@example.com
+✓ Magic link sent to bob@example.com
+```

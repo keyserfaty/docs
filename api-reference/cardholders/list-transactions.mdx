@@ -1,0 +1,80 @@
+---
+title: 'List Cardholder Transactions'
+api: 'GET https://api.agentcard.sh/api/v1/cardholders/{id}/wallet/transactions'
+description: "List wallet transactions for a cardholder"
+---
+
+Returns a paginated list of wallet transactions for a specific cardholder.
+
+## Path parameters
+
+<ParamField path="id" type="string" required>
+  The cardholder's unique identifier.
+</ParamField>
+
+## Query parameters
+
+<ParamField query="limit" type="integer" default="50">
+  Number of transactions to return. Min 1, max 100.
+</ParamField>
+
+<ParamField query="offset" type="integer" default="0">
+  Number of transactions to skip for pagination.
+</ParamField>
+
+## Response
+
+<ResponseField name="transactions" type="array">
+  Array of wallet transaction objects.
+</ResponseField>
+
+<ResponseField name="total" type="integer">
+  Total number of transactions.
+</ResponseField>
+
+<ResponseField name="limit" type="integer">
+  The limit used for this request.
+</ResponseField>
+
+<ResponseField name="offset" type="integer">
+  The offset used for this request.
+</ResponseField>
+
+<RequestExample>
+```bash cURL
+curl "https://api.agentcard.sh/api/v1/cardholders/ch_abc123/wallet/transactions?limit=20" \
+  -H "Authorization: Bearer sk_test_..."
+```
+</RequestExample>
+
+<ResponseExample>
+```json 200
+{
+  "transactions": [
+    {
+      "id": "wt_abc123",
+      "type": "card_creation",
+      "amountCents": -1000,
+      "description": "Card creation – $10.00",
+      "createdAt": "2026-03-10T14:00:00.000Z"
+    },
+    {
+      "id": "wt_def456",
+      "type": "funding",
+      "amountCents": 5000,
+      "description": "Wallet funding from organization",
+      "createdAt": "2026-03-10T12:00:00.000Z"
+    }
+  ],
+  "total": 2,
+  "limit": 20,
+  "offset": 0
+}
+```
+
+```json 404
+{
+  "error": "Cardholder not found"
+}
+```
+</ResponseExample>

@@ -1,0 +1,22 @@
+---
+title: 'cards list'
+description: 'List all cards'
+---
+
+Lists all cards in the organization in a table.
+
+```bash
+agent-cards-admin cards list
+```
+
+## Example
+
+```
+$ agent-cards-admin cards list
+┌─────────────┬────────┬────────┬─────────┬─────────────┬────────────┐
+│ ID          │ Last 4 │ Status │ Balance │ Spend Limit │ Created    │
+├─────────────┼────────┼────────┼─────────┼─────────────┼────────────┤
+│ cm3abc123   │ 4242   │ OPEN   │ $7.50   │ $10.00      │ 3/10/2026  │
+│ cm3def456   │ 1234   │ CLOSED │ $0.00   │ $25.00      │ 3/8/2026   │
+└─────────────┴────────┴────────┴─────────┴─────────────┴────────────┘
+```

@@ -1,0 +1,84 @@
+---
+title: API Overview
+description: 'REST API for managing virtual cards and wallets'
+---
+
+The AgentCard API is a REST API that lets you programmatically create and manage virtual Visa cards for AI agents.
+
+## Base URL
+
+```
+https://api.agentcard.sh/api/v1
+```
+
+## Authentication
+
+All requests require a Bearer token with your API key:
+
+```bash
+Authorization: Bearer sk_test_...
+```
+
+See [Authentication](/authentication) for details.
+
+## Response format
+
+All responses are JSON. Successful responses return the resource directly. Errors return an `error` field:
+
+```json
+{
+  "error": "Description of what went wrong"
+}
+```
+
+## Pagination
+
+List endpoints support `limit` and `offset` query parameters:
+
+| Parameter | Type | Default | Max | Description |
+|-----------|------|---------|-----|-------------|
+| `limit` | `integer` | 50 | 100 | Number of items to return |
+| `offset` | `integer` | 0 | — | Number of items to skip |
+
+Paginated responses include `total`, `limit`, and `offset` fields.
+
+## Status codes
+
+| Code | Description |
+|------|-------------|
+| `200` | Success |
+| `201` | Resource created |
+| `400` | Invalid request parameters |
+| `401` | Authentication failed |
+| `402` | Insufficient wallet balance |
+| `403` | Forbidden (suspended org or missing scope) |
+| `404` | Resource not found |
+| `409` | Conflict (e.g. duplicate cardholder email) |
+| `429` | Rate limit exceeded |
+| `500` | Internal server error |
+| `502` | Provider error (card close failed at Stripe/Privacy) |
+
+## Endpoints
+
+### Cards
+
+| Method | Path | Description |
+|--------|------|-------------|
+| `POST` | `/cards` | [Create a card](/api-reference/cards/create) |
+| `GET` | `/cards` | [List cards](/api-reference/cards/list) |
+| `GET` | `/cards/:id` | [Get a card](/api-reference/cards/get) |
+| `GET` | `/cards/:id/details` | [Get card details (PAN/CVV)](/api-reference/cards/get-details) |
+| `DELETE` | `/cards/:id` | [Close a card](/api-reference/cards/close) |
+
+### Cardholders
+
+| Method | Path | Description |
+|--------|------|-------------|
+| `POST` | `/cardholders` | [Create a cardholder](/api-reference/cardholders/create) |
+| `GET` | `/cardholders` | [List cardholders](/api-reference/cardholders/list) |
+| `GET` | `/cardholders/:id` | [Get a cardholder](/api-reference/cardholders/get) |
+| `PATCH` | `/cardholders/:id` | [Update a cardholder](/api-reference/cardholders/update) |
+| `POST` | `/cardholders/:id/wallet/fund` | [Fund cardholder wallet](/api-reference/cardholders/fund-wallet) |
+| `GET` | `/cardholders/funding/status/:sessionId` | [Get funding status](/api-reference/cardholders/get-funding-status) |
+| `GET` | `/cardholders/:id/wallet/balance` | [Get cardholder balance](/api-reference/cardholders/get-balance) |
+| `GET` | `/cardholders/:id/wallet/transactions` | [List cardholder transactions](/api-reference/cardholders/list-transactions) |

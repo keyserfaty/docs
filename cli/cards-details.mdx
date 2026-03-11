@@ -1,0 +1,35 @@
+---
+title: 'cards details'
+description: 'Get full card details (PAN, CVV, expiry)'
+---
+
+Returns the full card number (PAN), CVV, and expiry. If no card ID is provided, you are prompted to select one.
+
+```bash
+agent-cards-admin cards details
+```
+
+## Example
+
+```
+$ agent-cards-admin cards details
+? API key: sk_test_a1b2c3d4e5f6...
+? Select card: **** 4242 | OPEN | $7.50
+
+  WARNING: Sensitive card data below. Do not share or log this output.
+
+  ID          cm3abc123
+  PAN         4242424242424242
+  CVV         123
+  Expiry      03/28
+  Last 4      4242
+  Balance     $7.50
+  Spend Limit $10.00
+  Status      OPEN
+```
+
+You can also pass the card ID directly:
+
+```bash
+agent-cards-admin cards details cm3abc123
+```

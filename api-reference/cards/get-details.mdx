@@ -1,0 +1,84 @@
+---
+title: 'Get Card Details'
+api: 'GET https://api.agentcard.sh/api/v1/cards/{id}/details'
+description: 'Get full card details including PAN and CVV'
+---
+
+Returns the full card number (PAN), CVV, and other details. Use this endpoint to retrieve credentials for making purchases.
+
+<Warning>
+  This endpoint returns sensitive card data. Every call is audit-logged. Only request card details when your agent needs them to complete a purchase.
+</Warning>
+
+## Path parameters
+
+<ParamField path="id" type="string" required>
+  The card ID.
+</ParamField>
+
+## Response
+
+<ResponseField name="id" type="string">
+  Unique card identifier.
+</ResponseField>
+
+<ResponseField name="cardholderId" type="string">
+  The cardholder this card belongs to, if any.
+</ResponseField>
+
+<ResponseField name="pan" type="string">
+  Full card number (Primary Account Number).
+</ResponseField>
+
+<ResponseField name="cvv" type="string">
+  Card security code.
+</ResponseField>
+
+<ResponseField name="expiry" type="string">
+  Expiration date in `MM/YY` format.
+</ResponseField>
+
+<ResponseField name="last4" type="string">
+  Last 4 digits of the card number.
+</ResponseField>
+
+<ResponseField name="balanceCents" type="integer">
+  Remaining balance in cents.
+</ResponseField>
+
+<ResponseField name="spendLimitCents" type="integer">
+  The card's total spend limit in cents.
+</ResponseField>
+
+<ResponseField name="status" type="string">
+  `OPEN` or `CLOSED`.
+</ResponseField>
+
+<RequestExample>
+```bash cURL
+curl https://api.agentcard.sh/api/v1/cards/cm3abc123/details \
+  -H "Authorization: Bearer sk_test_..."
+```
+</RequestExample>
+
+<ResponseExample>
+```json 200
+{
+  "id": "cm3abc123",
+  "cardholderId": "ch_abc123",
+  "pan": "4242424242424242",
+  "cvv": "123",
+  "expiry": "03/28",
+  "last4": "4242",
+  "balanceCents": 750,
+  "spendLimitCents": 1000,
+  "status": "OPEN"
+}
+```
+
+```json 404
+{
+  "error": "Card not found"
+}
+```
+</ResponseExample>

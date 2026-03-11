@@ -1,0 +1,164 @@
+{
+  "$schema": "https://mintlify.com/schema.json",
+  "name": "AgentCard",
+  "logo": {
+    "dark": "/logo/dark.svg",
+    "light": "/logo/light.svg"
+  },
+  "favicon": "/favicon.svg",
+  "colors": {
+    "primary": "#0D9373",
+    "light": "#07C983",
+    "dark": "#0D9373",
+    "anchors": {
+      "from": "#0D9373",
+      "to": "#07C983"
+    }
+  },
+  "topbarLinks": [
+    {
+      "name": "Support",
+      "url": "mailto:support@agentcard.sh"
+    }
+  ],
+  "topbarCtaButton": {
+    "name": "Dashboard",
+    "url": "https://agentcard.sh"
+  },
+  "tabs": [
+    {
+      "name": "API Reference",
+      "url": "api-reference"
+    }
+  ],
+  "anchors": [
+    {
+      "name": "GitHub",
+      "icon": "github",
+      "url": "https://github.com/anthropics/agent-cards"
+    }
+  ],
+  "navigation": [
+    {
+      "group": "Get Started",
+      "pages": [
+        "introduction",
+        "quickstart",
+        "authentication"
+      ]
+    },
+    {
+      "group": "CLI",
+      "pages": [
+        "cli/overview",
+        {
+          "group": "Authentication",
+          "pages": [
+            "cli/login",
+            "cli/logout"
+          ]
+        },
+        {
+          "group": "Organizations",
+          "pages": [
+            "cli/orgs-create",
+            "cli/orgs-list",
+            "cli/orgs-get"
+          ]
+        },
+        {
+          "group": "API Keys",
+          "pages": [
+            "cli/keys-create",
+            "cli/keys-list",
+            "cli/keys-set",
+            "cli/keys-revoke",
+            "cli/keys-rotate"
+          ]
+        },
+        {
+          "group": "Members",
+          "pages": [
+            "cli/members-add",
+            "cli/members-list",
+            "cli/members-remove"
+          ]
+        },
+        {
+          "group": "Cardholders",
+          "pages": [
+            "cli/cardholders-create",
+            "cli/cardholders-list",
+            "cli/cardholders-get"
+          ]
+        },
+        {
+          "group": "Wallet",
+          "pages": [
+            "cli/wallet-fund",
+            "cli/wallet-balance"
+          ]
+        },
+        {
+          "group": "Cards",
+          "pages": [
+            "cli/cards-create",
+            "cli/cards-list",
+            "cli/cards-get",
+            "cli/cards-details",
+            "cli/cards-close"
+          ]
+        }
+      ]
+    },
+    {
+      "group": "Concepts",
+      "pages": [
+        "concepts/cards",
+        "concepts/cardholders",
+        "concepts/wallet",
+        "concepts/organizations"
+      ]
+    },
+    {
+      "group": "API Reference",
+      "pages": [
+        "api-reference/overview"
+      ]
+    },
+    {
+      "group": "Cards",
+      "pages": [
+        "api-reference/cards/create",
+        "api-reference/cards/list",
+        "api-reference/cards/get",
+        "api-reference/cards/get-details",
+        "api-reference/cards/close"
+      ]
+    },
+    {
+      "group": "Cardholders",
+      "pages": [
+        "api-reference/cardholders/create",
+        "api-reference/cardholders/list",
+        "api-reference/cardholders/get",
+        "api-reference/cardholders/update",
+        "api-reference/cardholders/fund-wallet",
+        "api-reference/cardholders/get-funding-status",
+        "api-reference/cardholders/get-balance",
+        "api-reference/cardholders/list-transactions"
+      ]
+    },
+    {
+      "group": "Wallet",
+      "pages": [
+        "api-reference/wallet/get-balance",
+        "api-reference/wallet/list-transactions"
+      ]
+    }
+  ],
+  "footerSocials": {
+    "x": "https://x.com/agentcard",
+    "github": "https://github.com/anthropics/agent-cards"
+  }
+}

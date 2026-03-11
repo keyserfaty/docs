@@ -1,0 +1,72 @@
+---
+title: 'List Cards'
+api: 'GET https://api.agentcard.sh/api/v1/cards'
+description: 'List all cards in your organization'
+---
+
+Returns a paginated list of cards belonging to your organization.
+
+## Query parameters
+
+<ParamField query="status" type="string">
+  Filter by card status. Accepted values: `OPEN`, `CLOSED`.
+</ParamField>
+
+<ParamField query="cardholderId" type="string">
+  Filter cards by cardholder ID.
+</ParamField>
+
+<ParamField query="limit" type="integer" default="50">
+  Number of cards to return. Min 1, max 100.
+</ParamField>
+
+<ParamField query="offset" type="integer" default="0">
+  Number of cards to skip for pagination.
+</ParamField>
+
+## Response
+
+<ResponseField name="cards" type="array">
+  Array of card objects.
+</ResponseField>
+
+<ResponseField name="total" type="integer">
+  Total number of cards matching the filter.
+</ResponseField>
+
+<ResponseField name="limit" type="integer">
+  The limit used for this request.
+</ResponseField>
+
+<ResponseField name="offset" type="integer">
+  The offset used for this request.
+</ResponseField>
+
+<RequestExample>
+```bash cURL
+curl "https://api.agentcard.sh/api/v1/cards?status=OPEN&limit=10" \
+  -H "Authorization: Bearer sk_test_..."
+```
+</RequestExample>
+
+<ResponseExample>
+```json 200
+{
+  "cards": [
+    {
+      "id": "cm3abc123",
+      "cardholderId": "ch_abc123",
+      "last4": "4242",
+      "expiry": "03/28",
+      "spendLimitCents": 1000,
+      "balanceCents": 750,
+      "status": "OPEN",
+      "createdAt": "2026-03-10T12:00:00.000Z"
+    }
+  ],
+  "total": 1,
+  "limit": 10,
+  "offset": 0
+}
+```
+</ResponseExample>

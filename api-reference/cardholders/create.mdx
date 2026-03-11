@@ -1,0 +1,127 @@
+---
+title: 'Create Cardholder'
+api: 'POST https://api.agentcard.sh/api/v1/cardholders'
+description: 'Create a new cardholder in your organization'
+---
+
+Creates a new org-managed cardholder. The cardholder is immediately usable — you can fund their wallet and create cards for them right away.
+
+## Request body
+
+<ParamField body="firstName" type="string" required>
+  Cardholder's first name.
+</ParamField>
+
+<ParamField body="lastName" type="string" required>
+  Cardholder's last name.
+</ParamField>
+
+<ParamField body="dateOfBirth" type="string" required>
+  Date of birth in `YYYY-MM-DD` format (e.g. `"1990-01-15"`).
+</ParamField>
+
+<ParamField body="email" type="string">
+  Cardholder's email address. Must be unique within the organization.
+</ParamField>
+
+<ParamField body="phoneNumber" type="string">
+  Cardholder's phone number.
+</ParamField>
+
+## Response
+
+<ResponseField name="id" type="string">
+  Unique cardholder identifier.
+</ResponseField>
+
+<ResponseField name="firstName" type="string">
+  Cardholder's first name.
+</ResponseField>
+
+<ResponseField name="lastName" type="string">
+  Cardholder's last name.
+</ResponseField>
+
+<ResponseField name="email" type="string">
+  Cardholder's email address, if provided.
+</ResponseField>
+
+<ResponseField name="dateOfBirth" type="string">
+  Date of birth.
+</ResponseField>
+
+<ResponseField name="phoneNumber" type="string">
+  Phone number, if provided.
+</ResponseField>
+
+<ResponseField name="stripeCardholderId" type="string">
+  The Stripe Issuing cardholder ID. Present once the cardholder has been provisioned with Stripe.
+</ResponseField>
+
+<ResponseField name="createdAt" type="string">
+  ISO 8601 creation timestamp.
+</ResponseField>
+
+<ResponseField name="updatedAt" type="string">
+  ISO 8601 last-updated timestamp.
+</ResponseField>
+
+<RequestExample>
+```bash cURL
+curl -X POST https://api.agentcard.sh/api/v1/cardholders \
+  -H "Authorization: Bearer sk_test_..." \
+  -H "Content-Type: application/json" \
+  -d '{"firstName": "Alice", "lastName": "Smith", "dateOfBirth": "1990-01-15", "email": "alice@example.com"}'
+```
+
+```python Python
+import requests
+
+resp = requests.post(
+    "https://api.agentcard.sh/api/v1/cardholders",
+    headers={"Authorization": "Bearer sk_test_..."},
+    json={"firstName": "Alice", "lastName": "Smith", "dateOfBirth": "1990-01-15", "email": "alice@example.com"},
+)
+cardholder = resp.json()
+```
+
+```javascript Node.js
+const resp = await fetch("https://api.agentcard.sh/api/v1/cardholders", {
+  method: "POST",
+  headers: {
+    Authorization: "Bearer sk_test_...",
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({ firstName: "Alice", lastName: "Smith", dateOfBirth: "1990-01-15", email: "alice@example.com" }),
+});
+const cardholder = await resp.json();
+```
+</RequestExample>
+
+<ResponseExample>
+```json 201
+{
+  "id": "ch_abc123",
+  "firstName": "Alice",
+  "lastName": "Smith",
+  "email": "alice@example.com",
+  "dateOfBirth": "1990-01-15T00:00:00.000Z",
+  "phoneNumber": null,
+  "stripeCardholderId": "ich_1abc123",
+  "createdAt": "2026-03-10T12:00:00.000Z",
+  "updatedAt": "2026-03-10T12:00:00.000Z"
+}
+```
+
+```json 400
+{
+  "error": "dateOfBirth is required (e.g. \"1990-01-15\")"
+}
+```
+
+```json 409
+{
+  "error": "A cardholder with this email already exists in the organization"
+}
+```
+</ResponseExample>

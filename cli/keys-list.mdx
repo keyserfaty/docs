@@ -1,0 +1,31 @@
+---
+title: 'keys list'
+description: 'List API keys for an organization'
+---
+
+Lists all API keys for a given organization in a table. Keys are shown with their prefix only (not the full secret).
+
+```bash
+agent-cards-admin keys list --org <org-id>
+```
+
+## Options
+
+| Option | Description |
+|--------|-------------|
+| `--org <org-id>` | Organization ID (required) |
+
+## Example
+
+```
+$ agent-cards-admin keys list --org org_abc123
+
+  SANDBOX MODE — All API keys are sandbox-only (sk_test_*)
+
+┌─────────────┬──────────────┬─────────┬────────┬───────────┬────────────┐
+│ ID          │ Prefix       │ Name    │ Status │ Last Used │ Created    │
+├─────────────┼──────────────┼─────────┼────────┼───────────┼────────────┤
+│ key_abc123  │ sk_test_a1b2 │ dev-key │ active │ 3/10/2026 │ 3/1/2026   │
+│ key_def456  │ sk_test_x9y8 │ ci      │ active │ never     │ 3/5/2026   │
+└─────────────┴──────────────┴─────────┴────────┴───────────┴────────────┘
+```

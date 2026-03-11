@@ -1,0 +1,32 @@
+---
+title: 'orgs get'
+description: 'Show details of an organization'
+---
+
+Displays details for a specific organization. If no ID is provided, you are prompted to select one.
+
+```bash
+agent-cards-admin orgs get
+```
+
+## Example
+
+```
+$ agent-cards-admin orgs get
+? Select organization: Acme Inc (billing@acme.com)
+
+  ID            org_abc123
+  Name          Acme Inc
+  Billing Email billing@acme.com
+  Status        active
+  Members       3
+  API Keys      2
+  Created       3/1/2026, 12:00:00 PM
+  Updated       3/10/2026, 9:30:00 AM
+```
+
+You can also pass the org ID directly:
+
+```bash
+agent-cards-admin orgs get org_abc123
+```

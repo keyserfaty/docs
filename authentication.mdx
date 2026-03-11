@@ -1,0 +1,53 @@
+---
+title: Authentication
+description: 'API key authentication for the AgentCard API'
+---
+
+All API requests require authentication via an API key passed in the `Authorization` header.
+
+## API keys
+
+API keys are scoped to an organization and created through the [admin CLI](/cli/keys-create) or dashboard. Keys use the prefix `sk_test_` and look like:
+
+```
+sk_test_abc123def456...
+```
+
+## Making authenticated requests
+
+Pass your API key as a Bearer token in the `Authorization` header:
+
+```bash
+curl https://api.agentcard.sh/api/v1/cards \
+  -H "Authorization: Bearer sk_test_abc123def456..."
+```
+
+## Error responses
+
+| Status | Error | Description |
+|--------|-------|-------------|
+| `401` | `Missing or invalid Authorization header` | No `Authorization: Bearer` header provided |
+| `401` | `Invalid API key format` | Key doesn't start with `sk_test_` |
+| `401` | `Invalid or revoked API key` | Key not found or has been revoked |
+| `403` | `Organization is suspended` | The org associated with this key is suspended |
+| `429` | `API key rate limit exceeded` | Per-key rate limit exceeded (default: 1,000 req/hour) |
+
+## Rate limits
+
+Each API key has a configurable rate limit (default: **1,000 requests per hour**). Rate limit headers are included in every response:
+
+| Header | Description |
+|--------|-------------|
+| `RateLimit-Limit` | Max requests allowed in the window |
+| `RateLimit-Remaining` | Requests remaining in the current window |
+| `RateLimit-Reset` | Seconds until the window resets |
+
+## Key management
+
+API keys can be managed through the `agent-cards-admin` CLI:
+
+- [**Create**](/cli/keys-create) — Generate a new key for your organization
+- [**Set**](/cli/keys-set) — Set the active API key for CLI commands
+- [**Rotate**](/cli/keys-rotate) — Replace an existing key with a new one (old key is immediately revoked)
+- [**Revoke**](/cli/keys-revoke) — Permanently disable a key
+- [**List**](/cli/keys-list) — View all keys for an organization

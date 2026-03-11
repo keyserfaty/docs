@@ -1,0 +1,37 @@
+---
+title: Wallet
+description: 'Cardholder wallets for funding cards'
+---
+
+Each cardholder has a wallet that holds funds used to create cards. When you create a card, the spend limit is debited from the cardholder's wallet. When a card is closed, any remaining balance is credited back.
+
+## Funding
+
+<Frame>
+  <img src="/images/fund-wallet.png" alt="Wallet funding flow" />
+</Frame>
+
+Add funds to a cardholder's wallet using the [Fund Cardholder Wallet](/api-reference/cardholders/fund-wallet) endpoint, which creates a Stripe Checkout session. Once payment completes, the funds are credited to the cardholder's wallet.
+
+Use the [Get Funding Status](/api-reference/cardholders/get-funding-status) endpoint to poll when a checkout session has completed.
+
+## Balance
+
+A cardholder's wallet balance reflects:
+
+- **Credits** — Funds added via checkout, card refunds, and remaining balances from closed cards
+- **Debits** — Funds allocated to new cards
+
+Check a cardholder's balance at any time with the [Get Cardholder Balance](/api-reference/cardholders/get-balance) endpoint.
+
+## Transactions
+
+Every wallet movement is recorded as a transaction. View a cardholder's transaction history with the [List Cardholder Transactions](/api-reference/cardholders/list-transactions) endpoint.
+
+Transaction types:
+
+| Type | Description |
+|------|-------------|
+| `card_creation` | Funds debited to create a new card |
+| `card_refund` | Funds returned from a closed or failed card |
+| `funding` | Funds added via Stripe Checkout |

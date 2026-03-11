@@ -1,0 +1,32 @@
+---
+title: 'cards get'
+description: 'Get card summary'
+---
+
+Shows a card's summary information (no sensitive details). If no card ID is provided, you are prompted to select one.
+
+```bash
+agent-cards-admin cards get
+```
+
+## Example
+
+```
+$ agent-cards-admin cards get
+? API key: sk_test_a1b2c3d4e5f6...
+? Select card: **** 4242 | OPEN | $7.50
+
+  ID          cm3abc123
+  Last 4      4242
+  Expiry      03/28
+  Balance     $7.50
+  Spend Limit $10.00
+  Status      OPEN
+  Created     3/10/2026, 12:00:00 PM
+```
+
+You can also pass the card ID directly:
+
+```bash
+agent-cards-admin cards get cm3abc123
+```

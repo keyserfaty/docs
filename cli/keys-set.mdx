@@ -1,0 +1,46 @@
+---
+title: 'keys set'
+description: 'Set the active API key'
+---
+
+Sets which API key the CLI uses for card, wallet, and cardholder commands. The active key is stored locally so you don't need to pass `--key` on every command.
+
+```bash
+agent-cards-admin keys set
+```
+
+## Options
+
+| Option | Description |
+|--------|-------------|
+| `--key <api-key>` | Set a key directly without interactive selection |
+
+## Interactive flow
+
+When run without `--key`, the CLI shows your locally stored keys first. You can pick one, fetch keys from the server, or paste a new key manually.
+
+```
+$ agent-cards-admin keys set
+? Select an API key to activate:
+  sk_test_a1b2... — dev-key (Acme Inc)
+  sk_test_x9y8... — ci-key (Acme Inc)
+  Choose from server...
+  Enter a different key
+```
+
+When choosing from the server, you select an organization and key, then paste the full key value. The CLI validates that the pasted key matches the selected prefix.
+
+## Non-interactive usage
+
+```bash
+agent-cards-admin keys set --key sk_test_a1b2c3d4e5f6...
+```
+
+## How key resolution works
+
+Commands that require an API key (`cards`, `wallet`, `cardholders`) resolve the key in this order:
+
+1. `--key` flag passed to the command
+2. Active key stored locally (set via `keys set`, `keys create`, or `keys rotate`)
+3. Interactive selection from stored keys (if multiple exist)
+4. Paste prompt as a fallback

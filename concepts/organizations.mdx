@@ -1,0 +1,30 @@
+---
+title: Organizations
+description: 'Team-level billing and access control'
+---
+
+Organizations are the top-level entity in AgentCard. All cardholders, cards, and API keys belong to an organization.
+
+<Frame>
+  <img src="/images/org-cardholder-relationship.png" alt="Organization to cardholder relationship" />
+</Frame>
+
+## Roles
+
+| Role | Permissions |
+|------|-------------|
+| **Owner** | Full access. Manage members, API keys, billing. |
+| **Admin** | Manage members and API keys. Cannot transfer ownership. |
+| **Member** | Read access to cards and wallet. Cannot manage keys or members. |
+
+## API keys
+
+Each organization can have multiple API keys. Keys are created by owners or admins and authenticate requests to the [REST API](/api-reference/overview).
+
+- Keys use the format `sk_test_*`
+- Each key has its own rate limit (default: 1,000 req/hour)
+- Keys can be rotated or revoked at any time
+
+## Status
+
+Organizations can be **active** or **suspended**. API requests from suspended organizations return `403 Forbidden`.

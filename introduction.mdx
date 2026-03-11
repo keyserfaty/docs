@@ -1,0 +1,38 @@
+---
+title: Introduction
+description: 'Prepaid virtual Visa cards for AI agents'
+---
+
+AgentCard lets you create and manage prepaid virtual Visa cards that AI agents can use to make purchases on the web. Each card belongs to a cardholder, is funded from their wallet, and can be created, monitored, and closed programmatically.
+
+## How it works
+
+<Frame>
+  <img src="/images/create-card-flow.png" alt="Card creation flow" />
+</Frame>
+
+1. **Create cardholders** — Set up cardholders for each end-user or agent that needs cards
+2. **Fund wallets** — Add funds to cardholder wallets via Stripe Checkout
+3. **Create cards** — Issue virtual Visa cards with a specific spend limit, debited from the cardholder's wallet
+4. **Give cards to agents** — Your AI agents use the card number, expiry, and CVV to make purchases
+5. **Monitor and close** — Track balances and transactions in real time, close cards when done
+
+## Access methods
+
+<CardGroup cols={2}>
+  <Card title="REST API" icon="code" href="/api-reference/overview">
+    Programmatic access with API keys. Create cards, check balances, and manage wallets.
+  </Card>
+  <Card title="CLI" icon="terminal" href="/cli/overview">
+    Manage organizations, cards, and wallets from your terminal with the `agent-cards-admin` CLI.
+  </Card>
+</CardGroup>
+
+## Key features
+
+- **Prepaid cards** — Cards are funded upfront, so agents can never overspend
+- **Per-card limits** — Each card has a fixed spend limit (max $500)
+- **Cardholder wallets** — Each cardholder has their own wallet with independent balance and transaction history
+- **Real-time balances** — Track remaining balance as transactions settle
+- **Instant close** — Revoke a card at any time, remaining balance returns to the cardholder's wallet
+- **Audit trail** — Every card creation, detail access, and close is logged

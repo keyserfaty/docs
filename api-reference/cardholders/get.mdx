@@ -1,0 +1,75 @@
+---
+title: 'Get Cardholder'
+api: 'GET https://api.agentcard.sh/api/v1/cardholders/{id}'
+description: 'Get a cardholder by ID'
+---
+
+Returns a single cardholder by their unique identifier.
+
+## Path parameters
+
+<ParamField path="id" type="string" required>
+  The cardholder's unique identifier.
+</ParamField>
+
+## Response
+
+<ResponseField name="id" type="string">
+  Unique cardholder identifier.
+</ResponseField>
+
+<ResponseField name="firstName" type="string">
+  Cardholder's first name.
+</ResponseField>
+
+<ResponseField name="lastName" type="string">
+  Cardholder's last name.
+</ResponseField>
+
+<ResponseField name="email" type="string">
+  Cardholder's email address, if provided.
+</ResponseField>
+
+<ResponseField name="dateOfBirth" type="string">
+  Date of birth, if provided.
+</ResponseField>
+
+<ResponseField name="phoneNumber" type="string">
+  Phone number, if provided.
+</ResponseField>
+
+<ResponseField name="createdAt" type="string">
+  ISO 8601 creation timestamp.
+</ResponseField>
+
+<ResponseField name="updatedAt" type="string">
+  ISO 8601 last-updated timestamp.
+</ResponseField>
+
+<RequestExample>
+```bash cURL
+curl https://api.agentcard.sh/api/v1/cardholders/ch_abc123 \
+  -H "Authorization: Bearer sk_test_..."
+```
+</RequestExample>
+
+<ResponseExample>
+```json 200
+{
+  "id": "ch_abc123",
+  "firstName": "Alice",
+  "lastName": "Smith",
+  "email": "alice@example.com",
+  "dateOfBirth": "1990-01-15T00:00:00.000Z",
+  "phoneNumber": null,
+  "createdAt": "2026-03-10T12:00:00.000Z",
+  "updatedAt": "2026-03-10T12:00:00.000Z"
+}
+```
+
+```json 404
+{
+  "error": "Cardholder not found"
+}
+```
+</ResponseExample>

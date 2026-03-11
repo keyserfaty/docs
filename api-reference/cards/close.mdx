@@ -1,0 +1,58 @@
+---
+title: 'Close Card'
+api: 'DELETE https://api.agentcard.sh/api/v1/cards/{id}'
+description: 'Close a card and revoke it at the provider'
+---
+
+Closes a card, revoking it at the card provider (Stripe Issuing). The card can no longer be used for purchases. Any remaining balance is returned to the appropriate wallet — the cardholder's wallet if the card has a `cardholderId`, or the organization wallet otherwise.
+
+Closing an already-closed card is a no-op and returns the current card state.
+
+## Path parameters
+
+<ParamField path="id" type="string" required>
+  The card ID.
+</ParamField>
+
+## Response
+
+<ResponseField name="id" type="string">
+  Unique card identifier.
+</ResponseField>
+
+<ResponseField name="status" type="string">
+  Card status. Will be `CLOSED` after a successful close.
+</ResponseField>
+
+<ResponseField name="refundedCents" type="integer">
+  Amount refunded to the wallet in cents. `0` if the card had no remaining balance.
+</ResponseField>
+
+<RequestExample>
+```bash cURL
+curl -X DELETE https://api.agentcard.sh/api/v1/cards/cm3abc123 \
+  -H "Authorization: Bearer sk_test_..."
+```
+</RequestExample>
+
+<ResponseExample>
+```json 200
+{
+  "id": "cm3abc123",
+  "status": "CLOSED",
+  "refundedCents": 250
+}
+```
+
+```json 404
+{
+  "error": "Card not found"
+}
+```
+
+```json 502
+{
+  "error": "Failed to close card at provider"
+}
+```
+</ResponseExample>

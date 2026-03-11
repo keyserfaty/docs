@@ -1,0 +1,22 @@
+---
+title: 'orgs list'
+description: 'List all organizations'
+---
+
+Lists all organizations you belong to in a table.
+
+```bash
+agent-cards-admin orgs list
+```
+
+## Example
+
+```
+$ agent-cards-admin orgs list
+┌──────────────┬──────────┬──────────────────┬────────┬────────────┐
+│ ID           │ Name     │ Billing Email    │ Status │ Created    │
+├──────────────┼──────────┼──────────────────┼────────┼────────────┤
+│ org_abc123   │ Acme Inc │ billing@acme.com │ active │ 3/1/2026   │
+│ org_def456   │ Beta Co  │ team@beta.co     │ active │ 3/5/2026   │
+└──────────────┴──────────┴──────────────────┴────────┴────────────┘
+```

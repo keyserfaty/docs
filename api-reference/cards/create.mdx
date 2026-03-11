@@ -1,0 +1,144 @@
+---
+title: 'Create Card'
+api: 'POST https://api.agentcard.sh/api/v1/cards'
+description: 'Create a new prepaid virtual Visa card'
+---
+
+Creates a new virtual Visa card funded from your organization's wallet.
+
+## Request body
+
+<ParamField body="amountCents" type="integer" required>
+  The card's spend limit in cents. Must be a positive integer, maximum 50,000 ($500.00).
+</ParamField>
+
+<ParamField body="cardholderId" type="string">
+  Optional cardholder ID. When provided, the card is associated with the cardholder and the spend limit is debited from the cardholder's wallet instead of the organization wallet. See [Cardholders](/concepts/cardholders).
+</ParamField>
+
+## Response
+
+<ResponseField name="id" type="string">
+  Unique card identifier.
+</ResponseField>
+
+<ResponseField name="cardholderId" type="string">
+  The cardholder this card belongs to, if one was provided.
+</ResponseField>
+
+<ResponseField name="last4" type="string">
+  Last 4 digits of the card number.
+</ResponseField>
+
+<ResponseField name="expiry" type="string">
+  Card expiration date in `MM/YY` format.
+</ResponseField>
+
+<ResponseField name="spendLimitCents" type="integer">
+  The card's total spend limit in cents.
+</ResponseField>
+
+<ResponseField name="balanceCents" type="integer">
+  Remaining balance in cents (equals `spendLimitCents` at creation).
+</ResponseField>
+
+<ResponseField name="status" type="string">
+  Card status. Always `OPEN` on creation.
+</ResponseField>
+
+<ResponseField name="sandbox" type="boolean">
+  Whether this card was created in sandbox mode.
+</ResponseField>
+
+<ResponseField name="createdAt" type="string">
+  ISO 8601 creation timestamp.
+</ResponseField>
+
+<RequestExample>
+```bash cURL
+curl -X POST https://api.agentcard.sh/api/v1/cards \
+  -H "Authorization: Bearer sk_test_..." \
+  -H "Content-Type: application/json" \
+  -d '{"amountCents": 1000}'
+```
+
+```bash cURL (with cardholder)
+curl -X POST https://api.agentcard.sh/api/v1/cards \
+  -H "Authorization: Bearer sk_test_..." \
+  -H "Content-Type: application/json" \
+  -d '{"amountCents": 1000, "cardholderId": "ch_abc123"}'
+```
+
+```python Python
+import requests
+
+resp = requests.post(
+    "https://api.agentcard.sh/api/v1/cards",
+    headers={"Authorization": "Bearer sk_test_..."},
+    json={"amountCents": 1000},
+)
+card = resp.json()
+```
+
+```javascript Node.js
+const resp = await fetch("https://api.agentcard.sh/api/v1/cards", {
+  method: "POST",
+  headers: {
+    Authorization: "Bearer sk_test_...",
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({ amountCents: 1000 }),
+});
+const card = await resp.json();
+```
+</RequestExample>
+
+<ResponseExample>
+```json 201
+{
+  "id": "cm3abc123",
+  "last4": "4242",
+  "expiry": "03/28",
+  "spendLimitCents": 1000,
+  "balanceCents": 1000,
+  "status": "OPEN",
+  "sandbox": true,
+  "createdAt": "2026-03-10T12:00:00.000Z"
+}
+```
+
+```json 400
+{
+  "error": "amountCents must be a positive integer"
+}
+```
+
+```json 201 (with cardholder)
+{
+  "id": "cm3abc123",
+  "cardholderId": "ch_abc123",
+  "last4": "4242",
+  "expiry": "03/28",
+  "spendLimitCents": 1000,
+  "balanceCents": 1000,
+  "status": "OPEN",
+  "createdAt": "2026-03-10T12:00:00.000Z"
+}
+```
+
+```json 402 (insufficient balance, checkout required)
+{
+  "status": "checkout_required",
+  "checkoutUrl": "https://checkout.stripe.com/c/pay/cs_test_...",
+  "fundingSessionId": "fs_abc123",
+  "balanceCents": 0,
+  "amountCents": 1000
+}
+```
+
+```json 402 (legacy, no cardholder)
+{
+  "error": "Insufficient wallet balance"
+}
+```
+</ResponseExample>
